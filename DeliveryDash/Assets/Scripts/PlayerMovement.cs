@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class NewBehaviourScript : MonoBehaviour
 {
     public float moveSpeed = 8f;
@@ -46,4 +48,6 @@ public class NewBehaviourScript : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = false;
     }
+
+    public PlayerMovementData movementData;
 }

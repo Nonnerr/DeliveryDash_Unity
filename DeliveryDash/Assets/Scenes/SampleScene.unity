@@ -957,6 +957,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 8
   jumpForce: 5
+  movementData: {fileID: 11400000, guid: 5e119b411959aa349ae8c55c14cd3167, type: 2}
 --- !u!50 &2102101793
 Rigidbody2D:
   serializedVersion: 4
