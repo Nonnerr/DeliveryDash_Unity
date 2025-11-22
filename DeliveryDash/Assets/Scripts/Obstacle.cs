@@ -12,7 +12,7 @@ public class Obstacle : MonoBehaviour
             Rigidbody rb = collision.collider.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.velocity *= 0.5f;
+                rb.linearVelocity *= 0.5f;
             }
         }
     }
