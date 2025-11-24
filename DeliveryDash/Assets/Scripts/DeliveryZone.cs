@@ -1,16 +1,27 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DeliveryZone : MonoBehaviour
 {
     public Transform startPoint;
-    public TMP_Text messageText;
+
+    [Header("GAME OVER UI")]
+    public Image blackScreen;
+    public TMP_Text gameOverText;
+
+    public DeliverySystem deliverySystem;
+    public int deliveriesToWin = 3;
 
     private void Start()
     {
-        if (messageText != null)
-            messageText.gameObject.SetActive(false);
+        if (blackScreen != null)
+            blackScreen.color = new Color(0, 0, 0, 0); // прозрачный
+
+        if (gameOverText != null)
+            gameOverText.color = new Color(1, 1, 1, 0); // прозрачный
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -24,26 +35,46 @@ public class DeliveryZone : MonoBehaviour
                 ds.Score++;
                 ds.HasPackage = false;
 
-                ShowMessage("Package Delivered! Score: " + ds.Score);
-
-                if (startPoint != null)
-                    other.transform.position = startPoint.position;
+                if (ds.Score >= deliveriesToWin)
+                {
+                    StartCoroutine(ShowGameOver());
+                }
+                else
+                {
+                    // возвращаем игрока к старту
+                    if (startPoint != null)
+                        other.transform.position = startPoint.position;
+                }
             }
         }
     }
 
-    private void ShowMessage(string text)
+    private IEnumerator ShowGameOver()
     {
-        messageText.text = text;
-        messageText.gameObject.SetActive(true);
+        // 1. Чёрный экран появляется постепенно
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime;
+            if (blackScreen != null)
+                blackScreen.color = new Color(0, 0, 0, t);
+            yield return null;
+        }
 
-    
-        StartCoroutine(HideAfterDelay(2f));
-    }
+        // 2. Текст появляется
+        float s = 0f;
+        while (s < 1f)
+        {
+            s += Time.deltaTime;
+            if (gameOverText != null)
+                gameOverText.color = new Color(1, 1, 1, s);
+            yield return null;
+        }
 
-    private IEnumerator HideAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        messageText.gameObject.SetActive(false);
+        // 3. Ждём 5 секунд
+        yield return new WaitForSeconds(5f);
+
+        // 4. Перезапускаем уровень
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

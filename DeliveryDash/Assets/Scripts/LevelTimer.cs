@@ -5,6 +5,11 @@ public class LevelTimer : MonoBehaviour
 {
     public float levelTime = 60f; 
     public TMP_Text timerText;
+    public void HideTimer()
+    {
+        if (timerText != null)
+            timerText.gameObject.SetActive(false);
+    }
 
     void Update()
     {
@@ -12,6 +17,10 @@ public class LevelTimer : MonoBehaviour
 
         if (levelTime < 0)
             levelTime = 0;
+        if (levelTime == 0)
+        {
+            FindObjectOfType<GameOverManager>().TriggerGameOver();
+        }
 
         if (timerText != null)
         {

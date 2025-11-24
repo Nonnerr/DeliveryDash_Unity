@@ -1,13 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 8f;
+    public float runMultiplier = 1.5f;
     public float jumpForce = 12f;
+    public Transform groundCheck;
+    public float checkRadius = 0.2f;
+    public LayerMask groundLayer;
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -19,14 +19,28 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update()
     {
+        GroundCheck();
         Move();
         Jump();
+    }
+
+    void GroundCheck()
+    {
+        // проверяем касание земли лучом/кругом (самый надёжный метод)
+        isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
     }
 
     void Move()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+
+        float speed = moveSpeed;
+
+        // Shift → бег
+        if (Input.GetKey(KeyCode.LeftShift))
+            speed *= runMultiplier;
+
+        rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
     }
 
     void Jump()
@@ -36,18 +50,4 @@ public class NewBehaviourScript : MonoBehaviour
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            isGrounded = true;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            isGrounded = false;
-    }
-
-    public PlayerMovementData movementData;
 }
