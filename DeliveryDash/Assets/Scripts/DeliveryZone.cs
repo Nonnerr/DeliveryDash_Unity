@@ -18,10 +18,9 @@ public class DeliveryZone : MonoBehaviour
     private void Start()
     {
         if (blackScreen != null)
-            blackScreen.color = new Color(0, 0, 0, 0); // прозрачный
-
+            blackScreen.color = new Color(0, 0, 0, 0);
         if (gameOverText != null)
-            gameOverText.color = new Color(1, 1, 1, 0); // прозрачный
+            gameOverText.color = new Color(1, 1, 1, 0); 
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -41,7 +40,7 @@ public class DeliveryZone : MonoBehaviour
                 }
                 else
                 {
-                    // возвращаем игрока к старту
+                  
                     if (startPoint != null)
                         other.transform.position = startPoint.position;
                 }
@@ -51,7 +50,7 @@ public class DeliveryZone : MonoBehaviour
 
     private IEnumerator ShowGameOver()
     {
-        // 1. Чёрный экран появляется постепенно
+        
         float t = 0f;
         while (t < 1f)
         {
@@ -61,7 +60,7 @@ public class DeliveryZone : MonoBehaviour
             yield return null;
         }
 
-        // 2. Текст появляется
+       
         float s = 0f;
         while (s < 1f)
         {
@@ -71,10 +70,10 @@ public class DeliveryZone : MonoBehaviour
             yield return null;
         }
 
-        // 3. Ждём 5 секунд
+    
         yield return new WaitForSeconds(5f);
 
-        // 4. Перезапускаем уровень
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

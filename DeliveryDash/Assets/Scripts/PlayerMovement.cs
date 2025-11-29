@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
 
     void GroundCheck()
     {
-        // проверяем касание земли лучом/кругом (самый надёжный метод)
+       
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
     }
 
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
 
         float speed = moveSpeed;
 
-        // Shift → бег
+      
         if (Input.GetKey(KeyCode.LeftShift))
             speed *= runMultiplier;
 
