@@ -14,4 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 10
   jumpForce: 13
+  coyoteTime: 0.15
   gravityScale: 1.5
+  fallGravityMultiplier: 2
+  lowJumpGravityMultiplier: 2.5
+  dashPower: 25
+  dashDuration: 0.15
+  dashCooldown: 1
