@@ -19,7 +19,8 @@ public class DeliverySystem : MonoBehaviour
 
             HasPackage = false;
 
-            OnScoreChanged?.Invoke(Score);
+            OnScoreChanged?.Invoke(Score); 
+            Debug.Log("Score updated: " + Score); 
         }
     }
 }

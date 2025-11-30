@@ -29,7 +29,8 @@ public class GameOverManager : MonoBehaviour
 
         blackScreen.SetActive(true);
 
-        gameOverText.text = "GAME OVER\nYour Score: " + deliverySystem.Score;
+        gameOverText.text = "GAME OVER\nYour Score: " + (deliverySystem != null ? deliverySystem.Score.ToString() : "0");
+
         gameOverText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(5f);
