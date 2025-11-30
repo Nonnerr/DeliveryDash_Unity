@@ -9,10 +9,8 @@ public class PackagePickup : MonoBehaviour
             DeliverySystem ds = other.GetComponent<DeliverySystem>();
             if (ds != null)
             {
-                ds.HasPackage = true;
-                ds.OnPackagePickedUp?.Invoke();
+                ds.PickupPackage();
             }
-
             Destroy(gameObject);
         }
     }

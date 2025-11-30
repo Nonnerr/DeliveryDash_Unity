@@ -6,21 +6,22 @@ public class DeliverySystem : MonoBehaviour
     public bool HasPackage = false;
     public int Score = 0;
 
-
     public Action OnPackagePickedUp;
     public Action<int> OnScoreChanged;
 
-    public void DeliverPackage(float timeBonus)
+    public void PickupPackage()
+    {
+        HasPackage = true;
+        Score += 1; 
+        OnScoreChanged?.Invoke(Score);
+        OnPackagePickedUp?.Invoke();
+    }
+
+    public void DeliverPackage()
     {
         if (HasPackage)
         {
-            int points = Mathf.RoundToInt(100 * timeBonus);
-            Score += points;
-
             HasPackage = false;
-
-            OnScoreChanged?.Invoke(Score); 
-            Debug.Log("Score updated: " + Score); 
         }
     }
 }

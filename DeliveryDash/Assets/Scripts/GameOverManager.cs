@@ -5,37 +5,35 @@ using System.Collections;
 
 public class GameOverManager : MonoBehaviour
 {
-    public GameObject blackScreen;        
-    public TMP_Text gameOverText;         
-    public LevelTimer levelTimer;        
-    public DeliverySystem deliverySystem;
+    public GameObject blackScreen;
+    public TMP_Text gameOverText;
 
     private void Start()
     {
-        blackScreen.SetActive(false);
-        gameOverText.gameObject.SetActive(false);
+        if (blackScreen != null)
+            blackScreen.SetActive(false);
+        if (gameOverText != null)
+            gameOverText.gameObject.SetActive(false);
     }
 
-    public void TriggerGameOver()
+    public void TriggerGameOver(int score)
     {
-        StartCoroutine(GameOverSequence());
+        StartCoroutine(GameOverSequence(score));
     }
 
-    IEnumerator GameOverSequence()
+    IEnumerator GameOverSequence(int score)
     {
-        
-        if (levelTimer != null)
-            levelTimer.HideTimer();
+        if (blackScreen != null)
+            blackScreen.SetActive(true);
 
-        blackScreen.SetActive(true);
-
-        gameOverText.text = "GAME OVER\nYour Score: " + (deliverySystem != null ? deliverySystem.Score.ToString() : "0");
-
-        gameOverText.gameObject.SetActive(true);
+        if (gameOverText != null)
+        {
+            gameOverText.text = "GAME OVER\nYour Score: " + score;
+            gameOverText.gameObject.SetActive(true);
+        }
 
         yield return new WaitForSeconds(5f);
 
-      
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
